@@ -1,0 +1,11 @@
+
+A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to  decimal places.
+
+SELECT ROUND(AVG(A.LAT_N), 4)
+  FROM (SELECT LAT_N
+             , ROW_NUMBER() OVER(ORDER BY LAT_N) RN
+             , COUNT(1) OVER() + 1 CNT
+          FROM STATION
+       ) A
+ WHERE A.RN BETWEEN FLOOR(A.CNT / 2) AND CEIL(A.CNT / 2)
+;
